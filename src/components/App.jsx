@@ -16,21 +16,24 @@ export const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState('');
 
-  const renderImages = async (searchQuery, page) => {
-    try {
-      setLoading(true);
-      const fetchedImages = await api.fetchImagesWithQuery(searchQuery, page);
-      setImages([...fetchedImages, ...images]);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    renderImages(searchWord, page);
-  }, [searchWord, page]);
+    const renderImages = async () => {
+      try {
+        setLoading(true);
+        const fetchedImages = await api.fetchImagesWithQuery(searchWord, page);
+        console.log(fetchedImages);
+        setImages([...images, ...fetchedImages]);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (!searchWord) {
+      return;
+    }
+    renderImages();
+  }, [searchWord, images, page]);
 
   const getSearchWord = searchWord => {
     setImages([]);

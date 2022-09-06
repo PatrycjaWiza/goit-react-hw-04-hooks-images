@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { ModalStyles } from './ModalStyles';
 
 export const Modal = ({ children, closeModal }) => {
-  const escOnClick = e => {
+  const escOnClick = ({ e, escModal }) => {
     if (e.key === 'Escape') {
-      this.props.escModal();
+      escModal();
     }
   };
 
