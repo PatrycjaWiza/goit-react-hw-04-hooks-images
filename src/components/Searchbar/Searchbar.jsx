@@ -1,46 +1,37 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { SearchbarStyle } from './SearchbarSyles';
 
-export class Searchbar extends Component {
-  state = {
-    name: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+
+  const handleChange = e => {
+    setName(e.target.value);
   };
 
-  handleChange = e => {
-    this.setState({ name: e.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.name);
-    this.reset();
+    onSubmit(name);
+    setName('');
   };
 
-  reset() {
-    this.setState({ name: '' });
-  }
+  return (
+    <SearchbarStyle className="searchbar">
+      <form className="form" onSubmit={handleSubmit}>
+        <button type="submit" className="button">
+          <span className="button-label">Search</span>
+        </button>
 
-  render() {
-    const { name } = this.state;
-    return (
-      <SearchbarStyle className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
-
-          <input
-            className="input"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            name="searchWord"
-            value={name}
-            onChange={this.handleChange}
-          />
-        </form>
-      </SearchbarStyle>
-    );
-  }
-}
+        <input
+          className="input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          name="searchWord"
+          value={name}
+          onChange={handleChange}
+        />
+      </form>
+    </SearchbarStyle>
+  );
+};
