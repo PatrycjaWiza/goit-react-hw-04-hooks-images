@@ -20,7 +20,6 @@ export const App = () => {
     try {
       setLoading(true);
       const fetchedImages = await api.fetchImagesWithQuery(searchQuery, page);
-      console.log(fetchedImages);
       setImages([...images, ...fetchedImages]);
     } catch (error) {
       setError(error);
